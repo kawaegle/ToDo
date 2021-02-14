@@ -1,1 +1,2 @@
-questionary
+python-rofi
+py-notifier
