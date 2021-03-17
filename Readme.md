@@ -2,22 +2,28 @@
 
 This little script can help you to have a better manager of To Do list for some bug and other error without mark it down on paper.
 
-To use this script, you need the ToDo.py file and launch it with the following command:
+## Dependence
 
+The single dependence is the "menu" for add and select the finished task and it's installable with pip by: 
+```sh
+pip3 install questionary
+```
+or
+```sh
+pip3 install -r requirement.txt
+```
+
+To use this script, you need the ToDo.py file and launch it with the following command:
 ```sh
 python3 ToDo.py
 ```
 
-# Install
-
-For linux and linux only there is a little script in the Git repo, just exectute by : ```$ ./path/ToDo/Install.sh```.
-
-For Macos i thinks it's pretty the same thing and i'm currently working on a version for windows.
+:warning: I've try to make it in one file ( and I'm pretty happy with it ). :warning:
 
 # Image
 
-## Menu
-![To Do Menu](src/menu.png)
+## Help
+![To Do Menu](src/help.png)
 
 ## Show task
 ![To Do show](src/show.png)

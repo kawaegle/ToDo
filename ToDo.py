@@ -2,9 +2,8 @@
 try:
 	import os.path
 	import sys
-	from rofi import Rofi
 	import time
-	import notify
+	import questionary
 except ImportError as e:
 	print(f"please check that you have {e} installed on your system with pip.")
 
@@ -13,9 +12,8 @@ todo_dir = os.path.join(os.path.expanduser('~'), '.todo')
 todo_todo, todo_finish = os.path.join(todo_dir, "todo_todo.txt"), os.path.join(todo_dir, 'todo_finish.txt')
 
 choices = ['Add', 'Finish', 'Show', 'Help']
-file = [todo_todo, todo_finish]
 
-r = Rofi()
+file = [todo_todo, todo_finish]
 
 def date():
 	from datetime import datetime
@@ -41,22 +39,20 @@ def verif():
 
 def add():
 	d = date()+":> "
-
-	task = r.text_entry("[ ? ] What is the task to add at the To Do list: ")
-	todo = open(file[0],"a+")
+	task = questionary.text("[ ? ] What is the task to add at the To Do list: ").ask()
+	todo = open(file[0], "a+")
 	todo.write(d+task+'\n')
-	notify.notification_total("TODO add", task)
+	print("Task added:", task)
 
 def finish():
 	d = date()+":> "
 	todo = open(file[0], "r+")
 	list1 = todo.readlines()
 	todo.close()
-	task = r.select("[ ? ]Select all the task you have finish:", list1)
-	task = list1.pop(task[0])
-	notify.notification_total("TODO finish", task)
+	task = questionary.select("[ ? ]Select all the task you have finish:", list1).ask()
+	list1.remove(task)
 	todo = open(file[1], 'a+')
-	todo.write(d+":: "+task+"\n")
+	todo.write(d+":: "+task)
 	todo.close()
 	todo = open(file[0], 'w+')
 	i = 0
@@ -68,28 +64,23 @@ def finish():
 def show():
 	i=0
 	for i in range(len(file)):
-		data = [ "TODO on going", "TODO FINISH"]
+		title = [ "TODO on going", "TODO FINISH"]
 		todo = open(file[i], 'r')
 		todo = todo.readlines()
-		title = data[i]
-		notify.notification_total(title, todo)
-		time.sleep(5)
+		todo = ('').join(todo)
+		title = title[i]
+		print(f"{title}:\n{todo}")
 
 def main():
-	arg = sys.argv[1]
-	if arg == "add":
+	arg = sys.argv[1].capitalize()
+	if arg == "Add":
 		add()
-	elif arg == "finish":
+	elif arg == "Finish":
 		finish()
-	elif arg == "show":
+	elif arg == "Show":
 		show()
 	else:
-		notify.notification_desc("This little script was made to maintain To Do List and have fun when i work on my TODO.\nI hope this can help you.")
-		time.sleep(5)
-		notify.notification_desc("\n\tDo it: Do it Now \n\tDecide: Schedule a time to do it \n\tDelegate: Who can do it for you \n\tDelete: remove that task or do it when you are boring")
-		time.sleep(5)
-		notify.notification_desc("Use \"Add \", \"Finish\", \"Show\"")
-
+		print("This little script was made to maintain To Do List and have fun when i work on my TODO.\nI hope this can help you:\n\tDo it: Do it Now \n\tDecide: Schedule a time to do it \n\tDelegate: Who can do it for you \n\tDelete: remove that task or do it when you are boring.\nUse \"Add \", \"Finish\", \"Show\"")
 
 verif()
 main()
