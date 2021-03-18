@@ -31,5 +31,8 @@ python3 ToDo.py
 ## Add task
 ![To Do add](src/add.png)
 
+## Remove task
+![To_Do_Remove](src/remove.png)
+
 ## Finish task
 ![To Do finish](src/finish.png)
