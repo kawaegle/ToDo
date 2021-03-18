@@ -1,4 +1,4 @@
-#! /bin/python
+#! /bin/python3
 try:
 	import os.path
 	import sys
@@ -61,6 +61,21 @@ def finish():
 		i +=  1
 	todo.close()
 
+def remove():
+	file_edit = questionary.select("[ ? ]Select the TODO list you want to edit:", file).ask()
+	todo = open(file_edit, "r+")
+	list1 = todo.readlines()
+	todo.close()
+	task = questionary.select("[ ? ]Select the task you want to remove:", list1).ask()
+	list1.remove(task)
+	list1 = ('\n').join(list1)
+	todo = open(file_edit, 'w+')
+	todo.write(list1)
+	todo.close()
+	os.system(f"sed '/^[[:space:]]*$/d' {file_edit} > /tmp/todo_swap && cat /tmp/todo_swap {file_edit}")
+	
+	
+
 def show():
 	i=0
 	for i in range(len(file)):
@@ -72,15 +87,20 @@ def show():
 		print(f"{title}:\n{todo}")
 
 def main():
-	arg = sys.argv[1].capitalize()
-	if arg == "Add":
-		add()
-	elif arg == "Finish":
-		finish()
-	elif arg == "Show":
-		show()
+	if len(sys.argv) == 1:
+		print("Use \"Add \", \"Finish\", \"Show\", \"Remove\"")
 	else:
-		print("This little script was made to maintain To Do List and have fun when i work on my TODO.\nI hope this can help you:\n\tDo it: Do it Now \n\tDecide: Schedule a time to do it \n\tDelegate: Who can do it for you \n\tDelete: remove that task or do it when you are boring.\nUse \"Add \", \"Finish\", \"Show\"")
+		arg = sys.argv[1].capitalize()
+		if arg == "Add":
+			add()
+		elif arg == "Finish":
+			finish()
+		elif arg == "Show":
+			show()
+		elif arg == "Remove":
+			remove()
+		else:
+			print("This little script was made to maintain To Do List and have fun when i work on my TODO.\nI hope this can help you:\n\tDo it: Do it Now \n\tDecide: Schedule a time to do it \n\tDelegate: Who can do it for you \n\tDelete: remove that task or do it when you are boring.\nUse \"Add \", \"Finish\", \"Show\", \"Remove\"")
 
 verif()
 main()
