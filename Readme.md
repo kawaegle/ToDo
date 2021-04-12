@@ -4,13 +4,12 @@ This little script can help you to have a better manager of To Do list for some 
 
 ## Dependence
 
-The single dependence is the "menu" for add and select the finished task and it's installable with pip by: 
+The single dependence is the "menu" named questionary
+
+## install
+
 ```sh
-pip3 install questionary
-```
-or
-```sh
-pip3 install -r requirement.txt
+./install.sh
 ```
 
 To use this script, you need the ToDo.py file and launch it with the following command:
