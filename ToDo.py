@@ -72,7 +72,7 @@ def remove():
 	todo = open(file_edit, 'w+')
 	todo.write(list1)
 	todo.close()
-	os.system(f"sed '/^[[:space:]]*$/d' {file_edit} > /tmp/todo_swap && cat /tmp/todo_swap {file_edit}")
+	os.system(f"sed '/^[[:space:]]*$/d' {file_edit} > /tmp/todo_swap && cat /tmp/todo_swap > {file_edit}")
 	
 	
 
@@ -92,13 +92,51 @@ def main():
 	else:
 		arg = sys.argv[1].capitalize()
 		if arg == "Add":
-			add()
+			print("Do you want to add task ? :[Yes/no]")
+			yn=input().capitalize()
+			while yn:
+				if yn == "Yes" or yn == "Y":
+					add()
+					print("Do you want to add task again ? :[Yes/no]")
+					yn=input().capitalize()
+				elif yn == "No" or yn == "N":
+					print("Good bye")
+					yn=None
+				else:
+					print("Do you want to add task again ? :[Yes/no]")
+					yn=input().capitalize()
 		elif arg == "Finish":
-			finish()
+			print("Do you want to set task as finish ? :[Yes/no]")
+			yn=input().capitalize()
+			while yn:
+				if yn == "Yes" or yn == "Y":
+					finish()
+					print("Do you want to set task as finish ? :[Yes/no]")
+					yn=input().capitalize()
+				elif yn == "No" or yn == "N":
+					print("Good bye")
+					yn=None
+				else:
+					print("Do you want to set task as finish ? :[Yes/no]")
+					yn=input().capitalize()
 		elif arg == "Show":
 			show()
 		elif arg == "Remove":
-			remove()
+			print("Do you want to remove task ? :[Yes/no]")
+			yn=input().capitalize()
+			print(yn)
+			while yn:
+				if yn == "Yes" or yn == "Y":
+					remove()
+					print("Do you want to remove task again ? :[Yes/no]")
+					yn=input().capitalize()
+				elif yn == "No" or yn == "N":
+					print("Good bye")
+					yn=None
+				else:
+					print("Do you want to remove task again ? :[Yes/no]")
+					yn=input().capitalize()
+					print(yn)
 		else:
 			print("This little script was made to maintain To Do List and have fun when i work on my TODO.\nI hope this can help you:\n\tDo it: Do it Now \n\tDecide: Schedule a time to do it \n\tDelegate: Who can do it for you \n\tDelete: remove that task or do it when you are boring.\nUse \"Add \", \"Finish\", \"Show\", \"Remove\"")
 
